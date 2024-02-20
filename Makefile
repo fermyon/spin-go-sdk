@@ -1,3 +1,5 @@
+VERSION = 2.3.0-pre0
+
 # ----------------------------------------------------------------------
 # Test
 # ----------------------------------------------------------------------
@@ -17,7 +19,7 @@ http/testdata/http-tinygo/main.wasm: http/testdata/http-tinygo/main.go
 # ----------------------------------------------------------------------
 # Build examples
 # ----------------------------------------------------------------------
-EXAMPLES_DIR = ../../examples
+EXAMPLES_DIR = examples
 
 .PHONY: build-examples
 build-examples: generate
@@ -70,9 +72,8 @@ generate: $(GENERATED_OUTBOUND_MYSQL) $(GENERATED_OUTBOUND_PG)
 generate: $(SDK_VERSION_DEST_FILES)
 
 $(SDK_VERSION_DEST_FILES): $(SDK_VERSION_SOURCE_FILE)
-	export version="$$(cd ../rust && cargo run)"; \
 	export commit="$$(git rev-parse HEAD)"; \
-	sed -e "s/{{VERSION}}/$${version}/" -e "s/{{COMMIT}}/$${commit}/" < $< > $@
+	sed -e "s/{{VERSION}}/${VERSION}/" -e "s/{{COMMIT}}/$${commit}/" < $< > $@
 
 $(GENERATED_SPIN_VARIABLES):
 	wit-bindgen c --import wit/spin-config.wit --out-dir ./variables
