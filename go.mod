@@ -1,4 +1,4 @@
-module github.com/fermyon/spin/sdk/go/v2
+module github.com/fermyon/spin-go-sdk
 
 go 1.20
 
