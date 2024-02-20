@@ -1,0 +1,21 @@
+spin_manifest_version = 2
+
+[application]
+name = "variables-example"
+authors = ["Fermyon Engineering <engineering@fermyon.com>"]
+description = "A simple Spin application written in (Tiny)Go."
+version = "1.0.0"
+
+[variables]
+object = { default = "teapot" }
+
+[[trigger.http]]
+route = "/..."
+component = "variables"
+
+[component.variables]
+source = "main.wasm"
+[component.variables.variables]
+message = "I'm a {{object}}"
+[component.variables.build]
+command = "tinygo build -target=wasi -gc=leaking -no-debug -o main.wasm main.go"
