@@ -7,7 +7,9 @@ import (
 	"io"
 	"net"
 	"net/http"
+	"os"
 	"os/exec"
+	"path/filepath"
 	"testing"
 	"time"
 )
@@ -141,15 +143,12 @@ func TestHTTPTriger(t *testing.T) {
 
 // TestBuildExamples ensures that the tinygo examples will build successfully.
 func TestBuildExamples(t *testing.T) {
-	for _, example := range []string{
-		"examples/http-tinygo",
-		"examples/http-tinygo-outbound-http",
-		"examples/tinygo-outbound-redis",
-		"examples/tinygo-redis",
-		"examples/tinygo-key-value",
-		"examples/variables-tinygo",
-	} {
-		build(t, example)
+	examples, err := os.ReadDir("examples")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, example := range examples {
+		build(t, filepath.Join("examples", example.Name()))
 	}
 }
 
