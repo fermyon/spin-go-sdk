@@ -4,17 +4,13 @@ VERSION = 2.3.0-pre0
 # Test
 # ----------------------------------------------------------------------
 .PHONY: test
-test: test-integration
+test: test
 	tinygo test -target=wasi -gc=leaking -v ./http
 	tinygo test -target=wasi -gc=leaking -v ./redis
 
 .PHONY: test-integration
-test-integration: http/testdata/http-tinygo/main.wasm
+test-integration:
 	go test -v -count=1 .
-
-http/testdata/http-tinygo/main.wasm: generate
-http/testdata/http-tinygo/main.wasm: http/testdata/http-tinygo/main.go
-	tinygo build -target=wasi -gc=leaking -no-debug -o http/testdata/http-tinygo/main.wasm http/testdata/http-tinygo/main.go
 
 # ----------------------------------------------------------------------
 # Build examples
