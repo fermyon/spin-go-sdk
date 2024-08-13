@@ -39,7 +39,7 @@ type Payload cm.List[uint8]
 //		int64(s64),
 //		binary(payload),
 //	}
-type RedisParameter cm.Variant[uint8, PayloadShape, int64]
+type RedisParameter cm.Variant[uint8, Payload, int64]
 
 // RedisParameterInt64 returns a [RedisParameter] of case "int64".
 func RedisParameterInt64(data int64) RedisParameter {
@@ -71,7 +71,7 @@ func (self *RedisParameter) Binary() *Payload {
 //		int64(s64),
 //		binary(payload),
 //	}
-type RedisResult cm.Variant[uint8, cm.StringShape, int64]
+type RedisResult cm.Variant[uint8, string, int64]
 
 // RedisResultNil returns a [RedisResult] of case "nil".
 func RedisResultNil() RedisResult {

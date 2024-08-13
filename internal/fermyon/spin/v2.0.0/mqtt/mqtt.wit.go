@@ -19,7 +19,7 @@ import (
 //		connection-failed(string),
 //		other(string),
 //	}
-type Error cm.Variant[uint8, cm.StringShape, string]
+type Error cm.Variant[uint8, string, string]
 
 // ErrorInvalidAddress returns a [Error] of case "invalid-address".
 //
@@ -136,7 +136,7 @@ func wasmimport_ConnectionOpen(address0 *uint8, address1 uint32, username0 *uint
 //	publish: func(topic: string, payload: payload, qos: qos) -> result<_, error>
 //
 //go:nosplit
-func (self Connection) Publish(topic string, payload Payload, qos Qos) (result cm.Result[ErrorShape, struct{}, Error]) {
+func (self Connection) Publish(topic string, payload Payload, qos Qos) (result cm.Result[Error, struct{}, Error]) {
 	self0 := cm.Reinterpret[uint32](self)
 	topic0, topic1 := cm.LowerString(topic)
 	payload0, payload1 := cm.LowerList(payload)
@@ -147,7 +147,7 @@ func (self Connection) Publish(topic string, payload Payload, qos Qos) (result c
 
 //go:wasmimport fermyon:spin/mqtt@2.0.0 [method]connection.publish
 //go:noescape
-func wasmimport_ConnectionPublish(self0 uint32, topic0 *uint8, topic1 uint32, payload0 *uint8, payload1 uint32, qos0 uint32, result *cm.Result[ErrorShape, struct{}, Error])
+func wasmimport_ConnectionPublish(self0 uint32, topic0 *uint8, topic1 uint32, payload0 *uint8, payload1 uint32, qos0 uint32, result *cm.Result[Error, struct{}, Error])
 
 // Payload represents the list "fermyon:spin/mqtt@2.0.0#payload".
 //

@@ -33,7 +33,7 @@ import (
 //		patch,
 //		other(string),
 //	}
-type Method cm.Variant[uint8, cm.StringShape, string]
+type Method cm.Variant[uint8, string, string]
 
 // MethodGet returns a [Method] of case "get".
 func MethodGet() Method {
@@ -153,7 +153,7 @@ func (self *Method) Other() *string {
 //		HTTPS,
 //		other(string),
 //	}
-type Scheme cm.Variant[uint8, cm.StringShape, string]
+type Scheme cm.Variant[uint8, string, string]
 
 // SchemeHTTP returns a [Scheme] of case "HTTP".
 func SchemeHTTP() Scheme {
@@ -1781,7 +1781,7 @@ func wasmimport_FutureTrailersResourceDrop(self0 uint32)
 //	get: func() -> option<result<result<option<trailers>, error-code>>>
 //
 //go:nosplit
-func (self FutureTrailers) Get() (result cm.Option[cm.Result[ResultOptionTrailersErrorCodeShape, cm.Result[ErrorCodeShape, cm.Option[Fields], ErrorCode], struct{}]]) {
+func (self FutureTrailers) Get() (result cm.Option[cm.Result[cm.Result[ErrorCodeShape, cm.Option[Fields], ErrorCode], cm.Result[ErrorCodeShape, cm.Option[Fields], ErrorCode], struct{}]]) {
 	self0 := cm.Reinterpret[uint32](self)
 	wasmimport_FutureTrailersGet((uint32)(self0), &result)
 	return
@@ -1789,7 +1789,7 @@ func (self FutureTrailers) Get() (result cm.Option[cm.Result[ResultOptionTrailer
 
 //go:wasmimport wasi:http/types@0.2.0 [method]future-trailers.get
 //go:noescape
-func wasmimport_FutureTrailersGet(self0 uint32, result *cm.Option[cm.Result[ResultOptionTrailersErrorCodeShape, cm.Result[ErrorCodeShape, cm.Option[Fields], ErrorCode], struct{}]])
+func wasmimport_FutureTrailersGet(self0 uint32, result *cm.Option[cm.Result[cm.Result[ErrorCodeShape, cm.Option[Fields], ErrorCode], cm.Result[ErrorCodeShape, cm.Option[Fields], ErrorCode], struct{}]])
 
 // Subscribe represents the imported method "subscribe".
 //
@@ -1992,7 +1992,7 @@ func wasmimport_OutgoingBodyResourceDrop(self0 uint32)
 //	error-code>
 //
 //go:nosplit
-func OutgoingBodyFinish(this OutgoingBody, trailers cm.Option[Fields]) (result cm.Result[ErrorCodeShape, struct{}, ErrorCode]) {
+func OutgoingBodyFinish(this OutgoingBody, trailers cm.Option[Fields]) (result cm.Result[ErrorCode, struct{}, ErrorCode]) {
 	this0 := cm.Reinterpret[uint32](this)
 	trailers0, trailers1 := lower_OptionTrailers(trailers)
 	wasmimport_OutgoingBodyFinish((uint32)(this0), (uint32)(trailers0), (uint32)(trailers1), &result)
@@ -2001,7 +2001,7 @@ func OutgoingBodyFinish(this OutgoingBody, trailers cm.Option[Fields]) (result c
 
 //go:wasmimport wasi:http/types@0.2.0 [static]outgoing-body.finish
 //go:noescape
-func wasmimport_OutgoingBodyFinish(this0 uint32, trailers0 uint32, trailers1 uint32, result *cm.Result[ErrorCodeShape, struct{}, ErrorCode])
+func wasmimport_OutgoingBodyFinish(this0 uint32, trailers0 uint32, trailers1 uint32, result *cm.Result[ErrorCode, struct{}, ErrorCode])
 
 // Write represents the imported method "write".
 //
@@ -2074,7 +2074,7 @@ func wasmimport_FutureIncomingResponseResourceDrop(self0 uint32)
 //	get: func() -> option<result<result<incoming-response, error-code>>>
 //
 //go:nosplit
-func (self FutureIncomingResponse) Get() (result cm.Option[cm.Result[ResultIncomingResponseErrorCodeShape, cm.Result[ErrorCodeShape, IncomingResponse, ErrorCode], struct{}]]) {
+func (self FutureIncomingResponse) Get() (result cm.Option[cm.Result[cm.Result[ErrorCodeShape, IncomingResponse, ErrorCode], cm.Result[ErrorCodeShape, IncomingResponse, ErrorCode], struct{}]]) {
 	self0 := cm.Reinterpret[uint32](self)
 	wasmimport_FutureIncomingResponseGet((uint32)(self0), &result)
 	return
@@ -2082,7 +2082,7 @@ func (self FutureIncomingResponse) Get() (result cm.Option[cm.Result[ResultIncom
 
 //go:wasmimport wasi:http/types@0.2.0 [method]future-incoming-response.get
 //go:noescape
-func wasmimport_FutureIncomingResponseGet(self0 uint32, result *cm.Option[cm.Result[ResultIncomingResponseErrorCodeShape, cm.Result[ErrorCodeShape, IncomingResponse, ErrorCode], struct{}]])
+func wasmimport_FutureIncomingResponseGet(self0 uint32, result *cm.Option[cm.Result[cm.Result[ErrorCodeShape, IncomingResponse, ErrorCode], cm.Result[ErrorCodeShape, IncomingResponse, ErrorCode], struct{}]])
 
 // Subscribe represents the imported method "subscribe".
 //

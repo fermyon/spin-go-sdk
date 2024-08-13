@@ -20,7 +20,7 @@ import (
 //		value-conversion-failed(string),
 //		other(string),
 //	}
-type Error cm.Variant[uint8, cm.StringShape, string]
+type Error cm.Variant[uint8, string, string]
 
 // ErrorConnectionFailed returns a [Error] of case "connection-failed".
 func ErrorConnectionFailed(data string) Error {
@@ -132,7 +132,7 @@ const (
 //		db-null,
 //		unsupported,
 //	}
-type DbValue cm.Variant[uint8, cm.StringShape, int64]
+type DbValue cm.Variant[uint8, string, int64]
 
 // DbValueBoolean returns a [DbValue] of case "boolean".
 func DbValueBoolean(data bool) DbValue {
@@ -306,7 +306,7 @@ func (self *DbValue) Unsupported() bool {
 //		binary(list<u8>),
 //		db-null,
 //	}
-type ParameterValue cm.Variant[uint8, cm.StringShape, int64]
+type ParameterValue cm.Variant[uint8, string, int64]
 
 // ParameterValueBoolean returns a [ParameterValue] of case "boolean".
 func ParameterValueBoolean(data bool) ParameterValue {

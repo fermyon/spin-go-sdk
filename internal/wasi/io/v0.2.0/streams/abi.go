@@ -5,14 +5,8 @@
 package streams
 
 import (
-	"github.com/ydnar/wasm-tools-go/cm"
 	"unsafe"
 )
-
-// ListU8Shape is used for storage in variant or result types.
-type ListU8Shape struct {
-	shape [unsafe.Sizeof(cm.List[uint8]{})]byte
-}
 
 // StreamErrorShape is used for storage in variant or result types.
 type StreamErrorShape struct {

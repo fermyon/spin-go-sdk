@@ -37,7 +37,7 @@ func wasmimport_Publish(address0 *uint8, address1 uint32, channel0 *uint8, chann
 //	get: func(address: string, key: string) -> result<payload, error>
 //
 //go:nosplit
-func Get(address string, key string) (result cm.Result[PayloadShape, redistypes.Payload, redistypes.Error]) {
+func Get(address string, key string) (result cm.Result[redistypes.Payload, redistypes.Payload, redistypes.Error]) {
 	address0, address1 := cm.LowerString(address)
 	key0, key1 := cm.LowerString(key)
 	wasmimport_Get((*uint8)(address0), (uint32)(address1), (*uint8)(key0), (uint32)(key1), &result)
@@ -46,7 +46,7 @@ func Get(address string, key string) (result cm.Result[PayloadShape, redistypes.
 
 //go:wasmimport fermyon:spin/redis get
 //go:noescape
-func wasmimport_Get(address0 *uint8, address1 uint32, key0 *uint8, key1 uint32, result *cm.Result[PayloadShape, redistypes.Payload, redistypes.Error])
+func wasmimport_Get(address0 *uint8, address1 uint32, key0 *uint8, key1 uint32, result *cm.Result[redistypes.Payload, redistypes.Payload, redistypes.Error])
 
 // Set represents the imported function "set".
 //
@@ -133,7 +133,7 @@ func wasmimport_Sadd(address0 *uint8, address1 uint32, key0 *uint8, key1 uint32,
 //	smembers: func(address: string, key: string) -> result<list<string>, error>
 //
 //go:nosplit
-func Smembers(address string, key string) (result cm.Result[ListStringShape, cm.List[string], redistypes.Error]) {
+func Smembers(address string, key string) (result cm.Result[cm.List[string], cm.List[string], redistypes.Error]) {
 	address0, address1 := cm.LowerString(address)
 	key0, key1 := cm.LowerString(key)
 	wasmimport_Smembers((*uint8)(address0), (uint32)(address1), (*uint8)(key0), (uint32)(key1), &result)
@@ -142,7 +142,7 @@ func Smembers(address string, key string) (result cm.Result[ListStringShape, cm.
 
 //go:wasmimport fermyon:spin/redis smembers
 //go:noescape
-func wasmimport_Smembers(address0 *uint8, address1 uint32, key0 *uint8, key1 uint32, result *cm.Result[ListStringShape, cm.List[string], redistypes.Error])
+func wasmimport_Smembers(address0 *uint8, address1 uint32, key0 *uint8, key1 uint32, result *cm.Result[cm.List[string], cm.List[string], redistypes.Error])
 
 // Srem represents the imported function "srem".
 //
@@ -172,7 +172,7 @@ func wasmimport_Srem(address0 *uint8, address1 uint32, key0 *uint8, key1 uint32,
 //	-> result<list<redis-result>, error>
 //
 //go:nosplit
-func Execute(address string, command string, arguments cm.List[redistypes.RedisParameter]) (result cm.Result[ListRedisResultShape, cm.List[redistypes.RedisResult], redistypes.Error]) {
+func Execute(address string, command string, arguments cm.List[redistypes.RedisParameter]) (result cm.Result[cm.List[redistypes.RedisResult], cm.List[redistypes.RedisResult], redistypes.Error]) {
 	address0, address1 := cm.LowerString(address)
 	command0, command1 := cm.LowerString(command)
 	arguments0, arguments1 := cm.LowerList(arguments)
@@ -182,4 +182,4 @@ func Execute(address string, command string, arguments cm.List[redistypes.RedisP
 
 //go:wasmimport fermyon:spin/redis execute
 //go:noescape
-func wasmimport_Execute(address0 *uint8, address1 uint32, command0 *uint8, command1 uint32, arguments0 *redistypes.RedisParameter, arguments1 uint32, result *cm.Result[ListRedisResultShape, cm.List[redistypes.RedisResult], redistypes.Error])
+func wasmimport_Execute(address0 *uint8, address1 uint32, command0 *uint8, command1 uint32, arguments0 *redistypes.RedisParameter, arguments1 uint32, result *cm.Result[cm.List[redistypes.RedisResult], cm.List[redistypes.RedisResult], redistypes.Error])

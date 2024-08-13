@@ -19,7 +19,7 @@ import (
 //		provider(string),
 //		other(string),
 //	}
-type Error cm.Variant[uint8, cm.StringShape, string]
+type Error cm.Variant[uint8, string, string]
 
 // ErrorInvalidName returns a [Error] of case "invalid-name".
 //

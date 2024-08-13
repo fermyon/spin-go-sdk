@@ -83,7 +83,7 @@ func wasmimport_ConnectionExecute(self0 uint32, statement0 *uint8, statement1 ui
 //		database-full,
 //		io(string),
 //	}
-type Error cm.Variant[uint8, cm.StringShape, string]
+type Error cm.Variant[uint8, string, string]
 
 // ErrorNoSuchDatabase returns a [Error] of case "no-such-database".
 //
@@ -161,7 +161,7 @@ func (self *Error) IO() *string {
 //		blob(list<u8>),
 //		null,
 //	}
-type Value cm.Variant[uint8, cm.StringShape, int64]
+type Value cm.Variant[uint8, string, int64]
 
 // ValueInteger returns a [Value] of case "integer".
 func ValueInteger(data int64) Value {

@@ -251,7 +251,7 @@ type DescriptorStat struct {
 //		now,
 //		timestamp(datetime),
 //	}
-type NewTimestamp cm.Variant[uint8, DateTimeShape, wallclock.DateTime]
+type NewTimestamp cm.Variant[uint8, wallclock.DateTime, wallclock.DateTime]
 
 // NewTimestampNoChange returns a [NewTimestamp] of case "no-change".
 //
@@ -900,7 +900,7 @@ func wasmimport_DescriptorReadViaStream(self0 uint32, offset0 uint64, result *cm
 //	readlink-at: func(path: string) -> result<string, error-code>
 //
 //go:nosplit
-func (self Descriptor) ReadLinkAt(path string) (result cm.Result[cm.StringShape, string, ErrorCode]) {
+func (self Descriptor) ReadLinkAt(path string) (result cm.Result[string, string, ErrorCode]) {
 	self0 := cm.Reinterpret[uint32](self)
 	path0, path1 := cm.LowerString(path)
 	wasmimport_DescriptorReadLinkAt((uint32)(self0), (*uint8)(path0), (uint32)(path1), &result)
@@ -909,7 +909,7 @@ func (self Descriptor) ReadLinkAt(path string) (result cm.Result[cm.StringShape,
 
 //go:wasmimport wasi:filesystem/types@0.2.0 [method]descriptor.readlink-at
 //go:noescape
-func wasmimport_DescriptorReadLinkAt(self0 uint32, path0 *uint8, path1 uint32, result *cm.Result[cm.StringShape, string, ErrorCode])
+func wasmimport_DescriptorReadLinkAt(self0 uint32, path0 *uint8, path1 uint32, result *cm.Result[string, string, ErrorCode])
 
 // RemoveDirectoryAt represents the imported method "remove-directory-at".
 //

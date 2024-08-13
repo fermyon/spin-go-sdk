@@ -19,7 +19,7 @@ import (
 //		type-error,
 //		other(string),
 //	}
-type Error cm.Variant[uint8, cm.StringShape, string]
+type Error cm.Variant[uint8, string, string]
 
 // ErrorInvalidAddress returns a [Error] of case "invalid-address".
 //
@@ -196,7 +196,7 @@ func wasmimport_ConnectionIncr(self0 uint32, key0 *uint8, key1 uint32, result *c
 //	publish: func(channel: string, payload: payload) -> result<_, error>
 //
 //go:nosplit
-func (self Connection) Publish(channel string, payload Payload) (result cm.Result[ErrorShape, struct{}, Error]) {
+func (self Connection) Publish(channel string, payload Payload) (result cm.Result[Error, struct{}, Error]) {
 	self0 := cm.Reinterpret[uint32](self)
 	channel0, channel1 := cm.LowerString(channel)
 	payload0, payload1 := cm.LowerList(payload)
@@ -206,7 +206,7 @@ func (self Connection) Publish(channel string, payload Payload) (result cm.Resul
 
 //go:wasmimport fermyon:spin/redis@2.0.0 [method]connection.publish
 //go:noescape
-func wasmimport_ConnectionPublish(self0 uint32, channel0 *uint8, channel1 uint32, payload0 *uint8, payload1 uint32, result *cm.Result[ErrorShape, struct{}, Error])
+func wasmimport_ConnectionPublish(self0 uint32, channel0 *uint8, channel1 uint32, payload0 *uint8, payload1 uint32, result *cm.Result[Error, struct{}, Error])
 
 // Sadd represents the imported method "sadd".
 //
@@ -237,7 +237,7 @@ func wasmimport_ConnectionSadd(self0 uint32, key0 *uint8, key1 uint32, values0 *
 //	set: func(key: string, value: payload) -> result<_, error>
 //
 //go:nosplit
-func (self Connection) Set(key string, value Payload) (result cm.Result[ErrorShape, struct{}, Error]) {
+func (self Connection) Set(key string, value Payload) (result cm.Result[Error, struct{}, Error]) {
 	self0 := cm.Reinterpret[uint32](self)
 	key0, key1 := cm.LowerString(key)
 	value0, value1 := cm.LowerList(value)
@@ -247,7 +247,7 @@ func (self Connection) Set(key string, value Payload) (result cm.Result[ErrorSha
 
 //go:wasmimport fermyon:spin/redis@2.0.0 [method]connection.set
 //go:noescape
-func wasmimport_ConnectionSet(self0 uint32, key0 *uint8, key1 uint32, value0 *uint8, value1 uint32, result *cm.Result[ErrorShape, struct{}, Error])
+func wasmimport_ConnectionSet(self0 uint32, key0 *uint8, key1 uint32, value0 *uint8, value1 uint32, result *cm.Result[Error, struct{}, Error])
 
 // Smembers represents the imported method "smembers".
 //
@@ -302,7 +302,7 @@ type Payload cm.List[uint8]
 //		int64(s64),
 //		binary(payload),
 //	}
-type RedisParameter cm.Variant[uint8, PayloadShape, int64]
+type RedisParameter cm.Variant[uint8, Payload, int64]
 
 // RedisParameterInt64 returns a [RedisParameter] of case "int64".
 func RedisParameterInt64(data int64) RedisParameter {
@@ -334,7 +334,7 @@ func (self *RedisParameter) Binary() *Payload {
 //		int64(s64),
 //		binary(payload),
 //	}
-type RedisResult cm.Variant[uint8, cm.StringShape, int64]
+type RedisResult cm.Variant[uint8, string, int64]
 
 // RedisResultNil returns a [RedisResult] of case "nil".
 func RedisResultNil() RedisResult {

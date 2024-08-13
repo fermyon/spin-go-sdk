@@ -17,7 +17,7 @@ import (
 //		invalid-schema(string),
 //		other(string),
 //	}
-type Error cm.Variant[uint8, cm.StringShape, string]
+type Error cm.Variant[uint8, string, string]
 
 // ErrorProvider returns a [Error] of case "provider".
 func ErrorProvider(data string) Error {

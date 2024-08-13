@@ -101,8 +101,3 @@ func lower_OptionIPSocketAddress(v cm.Option[network.IPSocketAddress]) (f0 uint3
 	}
 	return
 }
-
-// ListIncomingDatagramShape is used for storage in variant or result types.
-type ListIncomingDatagramShape struct {
-	shape [unsafe.Sizeof(cm.List[IncomingDatagram]{})]byte
-}

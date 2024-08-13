@@ -61,7 +61,7 @@ type InferencingParams struct {
 //		runtime-error(string),
 //		invalid-input(string),
 //	}
-type Error cm.Variant[uint8, cm.StringShape, string]
+type Error cm.Variant[uint8, string, string]
 
 // ErrorModelNotSupported returns a [Error] of case "model-not-supported".
 func ErrorModelNotSupported() Error {

@@ -477,7 +477,7 @@ func wasmimport_IncomingDatagramStreamResourceDrop(self0 uint32)
 //	receive: func(max-results: u64) -> result<list<incoming-datagram>, error-code>
 //
 //go:nosplit
-func (self IncomingDatagramStream) Receive(maxResults uint64) (result cm.Result[ListIncomingDatagramShape, cm.List[IncomingDatagram], network.ErrorCode]) {
+func (self IncomingDatagramStream) Receive(maxResults uint64) (result cm.Result[cm.List[IncomingDatagram], cm.List[IncomingDatagram], network.ErrorCode]) {
 	self0 := cm.Reinterpret[uint32](self)
 	maxResults0 := (uint64)(maxResults)
 	wasmimport_IncomingDatagramStreamReceive((uint32)(self0), (uint64)(maxResults0), &result)
@@ -486,7 +486,7 @@ func (self IncomingDatagramStream) Receive(maxResults uint64) (result cm.Result[
 
 //go:wasmimport wasi:sockets/udp@0.2.0 [method]incoming-datagram-stream.receive
 //go:noescape
-func wasmimport_IncomingDatagramStreamReceive(self0 uint32, maxResults0 uint64, result *cm.Result[ListIncomingDatagramShape, cm.List[IncomingDatagram], network.ErrorCode])
+func wasmimport_IncomingDatagramStreamReceive(self0 uint32, maxResults0 uint64, result *cm.Result[cm.List[IncomingDatagram], cm.List[IncomingDatagram], network.ErrorCode])
 
 // Subscribe represents the imported method "subscribe".
 //

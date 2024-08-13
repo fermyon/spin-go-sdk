@@ -61,7 +61,7 @@ func wasmimport_StoreOpen(label0 *uint8, label1 uint32, result *cm.Result[ErrorS
 //	delete: func(key: string) -> result<_, error>
 //
 //go:nosplit
-func (self Store) Delete(key string) (result cm.Result[ErrorShape, struct{}, Error]) {
+func (self Store) Delete(key string) (result cm.Result[Error, struct{}, Error]) {
 	self0 := cm.Reinterpret[uint32](self)
 	key0, key1 := cm.LowerString(key)
 	wasmimport_StoreDelete((uint32)(self0), (*uint8)(key0), (uint32)(key1), &result)
@@ -70,7 +70,7 @@ func (self Store) Delete(key string) (result cm.Result[ErrorShape, struct{}, Err
 
 //go:wasmimport fermyon:spin/key-value@2.0.0 [method]store.delete
 //go:noescape
-func wasmimport_StoreDelete(self0 uint32, key0 *uint8, key1 uint32, result *cm.Result[ErrorShape, struct{}, Error])
+func wasmimport_StoreDelete(self0 uint32, key0 *uint8, key1 uint32, result *cm.Result[Error, struct{}, Error])
 
 // Exists represents the imported method "exists".
 //
@@ -134,7 +134,7 @@ func wasmimport_StoreGetKeys(self0 uint32, result *cm.Result[ErrorShape, cm.List
 //	set: func(key: string, value: list<u8>) -> result<_, error>
 //
 //go:nosplit
-func (self Store) Set(key string, value cm.List[uint8]) (result cm.Result[ErrorShape, struct{}, Error]) {
+func (self Store) Set(key string, value cm.List[uint8]) (result cm.Result[Error, struct{}, Error]) {
 	self0 := cm.Reinterpret[uint32](self)
 	key0, key1 := cm.LowerString(key)
 	value0, value1 := cm.LowerList(value)
@@ -144,7 +144,7 @@ func (self Store) Set(key string, value cm.List[uint8]) (result cm.Result[ErrorS
 
 //go:wasmimport fermyon:spin/key-value@2.0.0 [method]store.set
 //go:noescape
-func wasmimport_StoreSet(self0 uint32, key0 *uint8, key1 uint32, value0 *uint8, value1 uint32, result *cm.Result[ErrorShape, struct{}, Error])
+func wasmimport_StoreSet(self0 uint32, key0 *uint8, key1 uint32, value0 *uint8, value1 uint32, result *cm.Result[Error, struct{}, Error])
 
 // Error represents the variant "fermyon:spin/key-value@2.0.0#error".
 //
@@ -156,7 +156,7 @@ func wasmimport_StoreSet(self0 uint32, key0 *uint8, key1 uint32, value0 *uint8, 
 //		access-denied,
 //		other(string),
 //	}
-type Error cm.Variant[uint8, cm.StringShape, string]
+type Error cm.Variant[uint8, string, string]
 
 // ErrorStoreTableFull returns a [Error] of case "store-table-full".
 //

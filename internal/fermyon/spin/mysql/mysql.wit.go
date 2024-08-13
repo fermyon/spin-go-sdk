@@ -22,7 +22,7 @@ import (
 //		value-conversion-failed(string),
 //		other-error(string),
 //	}
-type MysqlError cm.Variant[uint8, cm.StringShape, string]
+type MysqlError cm.Variant[uint8, string, string]
 
 // MysqlErrorSuccess returns a [MysqlError] of case "success".
 func MysqlErrorSuccess() MysqlError {
@@ -113,7 +113,7 @@ func wasmimport_Query(address0 *uint8, address1 uint32, statement0 *uint8, state
 //	-> result<_, mysql-error>
 //
 //go:nosplit
-func Execute(address string, statement string, params cm.List[rdbmstypes.ParameterValue]) (result cm.Result[MysqlErrorShape, struct{}, MysqlError]) {
+func Execute(address string, statement string, params cm.List[rdbmstypes.ParameterValue]) (result cm.Result[MysqlError, struct{}, MysqlError]) {
 	address0, address1 := cm.LowerString(address)
 	statement0, statement1 := cm.LowerString(statement)
 	params0, params1 := cm.LowerList(params)
@@ -123,4 +123,4 @@ func Execute(address string, statement string, params cm.List[rdbmstypes.Paramet
 
 //go:wasmimport fermyon:spin/mysql execute
 //go:noescape
-func wasmimport_Execute(address0 *uint8, address1 uint32, statement0 *uint8, statement1 uint32, params0 *rdbmstypes.ParameterValue, params1 uint32, result *cm.Result[MysqlErrorShape, struct{}, MysqlError])
+func wasmimport_Execute(address0 *uint8, address1 uint32, statement0 *uint8, statement1 uint32, params0 *rdbmstypes.ParameterValue, params1 uint32, result *cm.Result[MysqlError, struct{}, MysqlError])

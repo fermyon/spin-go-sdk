@@ -18,8 +18,3 @@ type ErrorShape struct {
 type OptionPayloadShape struct {
 	shape [unsafe.Sizeof(cm.Option[Payload]{})]byte
 }
-
-// PayloadShape is used for storage in variant or result types.
-type PayloadShape struct {
-	shape [unsafe.Sizeof(Payload{})]byte
-}

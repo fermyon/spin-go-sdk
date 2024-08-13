@@ -28,7 +28,7 @@ type Store uint32
 //		no-such-key,
 //		io(string),
 //	}
-type Error cm.Variant[uint8, cm.StringShape, string]
+type Error cm.Variant[uint8, string, string]
 
 // ErrorStoreTableFull returns a [Error] of case "store-table-full".
 //
@@ -170,7 +170,7 @@ func wasmimport_Get(store0 uint32, key0 *uint8, key1 uint32, result *cm.Result[E
 //	set: func(store: store, key: string, value: list<u8>) -> result<_, error>
 //
 //go:nosplit
-func Set(store Store, key string, value cm.List[uint8]) (result cm.Result[ErrorShape, struct{}, Error]) {
+func Set(store Store, key string, value cm.List[uint8]) (result cm.Result[Error, struct{}, Error]) {
 	store0 := (uint32)(store)
 	key0, key1 := cm.LowerString(key)
 	value0, value1 := cm.LowerList(value)
@@ -180,7 +180,7 @@ func Set(store Store, key string, value cm.List[uint8]) (result cm.Result[ErrorS
 
 //go:wasmimport fermyon:spin/key-value set
 //go:noescape
-func wasmimport_Set(store0 uint32, key0 *uint8, key1 uint32, value0 *uint8, value1 uint32, result *cm.Result[ErrorShape, struct{}, Error])
+func wasmimport_Set(store0 uint32, key0 *uint8, key1 uint32, value0 *uint8, value1 uint32, result *cm.Result[Error, struct{}, Error])
 
 // Delete represents the imported function "delete".
 //
@@ -193,7 +193,7 @@ func wasmimport_Set(store0 uint32, key0 *uint8, key1 uint32, value0 *uint8, valu
 //	delete: func(store: store, key: string) -> result<_, error>
 //
 //go:nosplit
-func Delete(store Store, key string) (result cm.Result[ErrorShape, struct{}, Error]) {
+func Delete(store Store, key string) (result cm.Result[Error, struct{}, Error]) {
 	store0 := (uint32)(store)
 	key0, key1 := cm.LowerString(key)
 	wasmimport_Delete((uint32)(store0), (*uint8)(key0), (uint32)(key1), &result)
@@ -202,7 +202,7 @@ func Delete(store Store, key string) (result cm.Result[ErrorShape, struct{}, Err
 
 //go:wasmimport fermyon:spin/key-value delete
 //go:noescape
-func wasmimport_Delete(store0 uint32, key0 *uint8, key1 uint32, result *cm.Result[ErrorShape, struct{}, Error])
+func wasmimport_Delete(store0 uint32, key0 *uint8, key1 uint32, result *cm.Result[Error, struct{}, Error])
 
 // Exists represents the imported function "exists".
 //

@@ -22,7 +22,7 @@ import (
 //		value-conversion-failed(string),
 //		other-error(string),
 //	}
-type PgError cm.Variant[uint8, cm.StringShape, string]
+type PgError cm.Variant[uint8, string, string]
 
 // PgErrorSuccess returns a [PgError] of case "success".
 func PgErrorSuccess() PgError {

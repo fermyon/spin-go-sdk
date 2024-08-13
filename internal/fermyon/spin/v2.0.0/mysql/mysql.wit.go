@@ -56,7 +56,7 @@ func wasmimport_ConnectionOpen(address0 *uint8, address1 uint32, result *cm.Resu
 //	execute: func(statement: string, params: list<parameter-value>) -> result<_, error>
 //
 //go:nosplit
-func (self Connection) Execute(statement string, params cm.List[rdbmstypes.ParameterValue]) (result cm.Result[ErrorShape, struct{}, rdbmstypes.Error]) {
+func (self Connection) Execute(statement string, params cm.List[rdbmstypes.ParameterValue]) (result cm.Result[rdbmstypes.Error, struct{}, rdbmstypes.Error]) {
 	self0 := cm.Reinterpret[uint32](self)
 	statement0, statement1 := cm.LowerString(statement)
 	params0, params1 := cm.LowerList(params)
@@ -66,7 +66,7 @@ func (self Connection) Execute(statement string, params cm.List[rdbmstypes.Param
 
 //go:wasmimport fermyon:spin/mysql@2.0.0 [method]connection.execute
 //go:noescape
-func wasmimport_ConnectionExecute(self0 uint32, statement0 *uint8, statement1 uint32, params0 *rdbmstypes.ParameterValue, params1 uint32, result *cm.Result[ErrorShape, struct{}, rdbmstypes.Error])
+func wasmimport_ConnectionExecute(self0 uint32, statement0 *uint8, statement1 uint32, params0 *rdbmstypes.ParameterValue, params1 uint32, result *cm.Result[rdbmstypes.Error, struct{}, rdbmstypes.Error])
 
 // Query represents the imported method "query".
 //
