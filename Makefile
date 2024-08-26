@@ -23,17 +23,18 @@ EXAMPLES_DIR = examples
 
 .PHONY: build-examples
 build-examples: generate
-build-examples: $(EXAMPLES_DIR)/http-tinygo-outbound-http/outbound-http-to-same-app/main.wasm
-build-examples: $(EXAMPLES_DIR)/http-tinygo-outbound-http/tinygo-hello/main.wasm
-build-examples: $(EXAMPLES_DIR)/http-tinygo/main.wasm
-build-examples: $(EXAMPLES_DIR)/tinygo-outbound-redis/main.wasm
-build-examples: $(EXAMPLES_DIR)/tinygo-redis/main.wasm
-build-examples: $(EXAMPLES_DIR)/tinygo-key-value/main.wasm
-build-examples: $(EXAMPLES_DIR)/tinygo-sqlite/main.wasm
-build-examples: $(EXAMPLES_DIR)/tinygo-llm/main.wasm
-build-examples: $(EXAMPLES_DIR)/tinygo-outbound-mysql/main.wasm
-build-examples: $(EXAMPLES_DIR)/tinygo-outbound-pg/main.wasm
-build-examples: $(EXAMPLES_DIR)/variables-tinygo/main.wasm
+build-examples: $(EXAMPLES_DIR)/http/main.wasm
+build-examples: $(EXAMPLES_DIR)/http-outbound/hello/main.wasm
+build-examples: $(EXAMPLES_DIR)/http-outbound/http-to-same-app/main.wasm
+build-examples: $(EXAMPLES_DIR)/http-router/main.wasm
+build-examples: $(EXAMPLES_DIR)/key-value/main.wasm
+build-examples: $(EXAMPLES_DIR)/llm/main.wasm
+build-examples: $(EXAMPLES_DIR)/mysql-outbound/main.wasm
+build-examples: $(EXAMPLES_DIR)/pg-outbound/main.wasm
+build-examples: $(EXAMPLES_DIR)/redis/main.wasm
+build-examples: $(EXAMPLES_DIR)/redis-outbound/main.wasm
+build-examples: $(EXAMPLES_DIR)/sqlite/main.wasm
+build-examples: $(EXAMPLES_DIR)/variables/main.wasm
 
 $(EXAMPLES_DIR)/%/main.wasm: $(EXAMPLES_DIR)/%/main.go
 	tinygo build -target=wasi -gc=leaking -no-debug -o $@ $<
