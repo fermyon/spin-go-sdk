@@ -7,7 +7,9 @@ import (
 	"io"
 	"net"
 	"net/http"
+	"os"
 	"os/exec"
+	"path/filepath"
 	"testing"
 	"time"
 )
@@ -40,13 +42,16 @@ type testSpin struct {
 	cmd    *exec.Cmd
 }
 
-func startSpin(t *testing.T, spinfile string) *testSpin {
-	// long timeout because... ci
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
+func startSpin(t *testing.T, dir string) *testSpin {
+	buildApp(t, dir)
 
 	url := getFreePort(t)
 
-	cmd := exec.CommandContext(ctx, spinBinary, "up", "--build", "--file", spinfile, "--listen", url)
+	// long timeout because... ci
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
+
+	cmd := exec.CommandContext(ctx, spinBinary, "up", "--listen", url)
+	cmd.Dir = dir
 	stderr := new(bytes.Buffer)
 	cmd.Stderr = stderr
 	if err := cmd.Start(); err != nil {
@@ -70,10 +75,10 @@ func startSpin(t *testing.T, spinfile string) *testSpin {
 	}
 }
 
-func build(t *testing.T, dir string) {
+func buildApp(t *testing.T, dir string) {
 	t.Helper()
 
-	t.Log("building example: ", dir)
+	t.Log("building application:", dir)
 
 	cmd := exec.Command(spinBinary, "build")
 	cmd.Dir = dir
@@ -87,7 +92,7 @@ func build(t *testing.T, dir string) {
 }
 
 func TestSpinRoundTrip(t *testing.T) {
-	spin := startSpin(t, "http/testdata/spin-roundtrip/spin.toml")
+	spin := startSpin(t, "http/testdata/spin-roundtrip")
 	defer spin.cancel()
 
 	resp := retryGet(t, spin.url+"/hello")
@@ -111,7 +116,7 @@ func TestSpinRoundTrip(t *testing.T) {
 }
 
 func TestHTTPTriger(t *testing.T) {
-	spin := startSpin(t, "http/testdata/http-tinygo/spin.toml")
+	spin := startSpin(t, "http/testdata/http-tinygo")
 	defer spin.cancel()
 
 	resp := retryGet(t, spin.url+"/hello")
@@ -141,15 +146,16 @@ func TestHTTPTriger(t *testing.T) {
 
 // TestBuildExamples ensures that the tinygo examples will build successfully.
 func TestBuildExamples(t *testing.T) {
-	for _, example := range []string{
-		"examples/http-tinygo",
-		"examples/http-tinygo-outbound-http",
-		"examples/tinygo-outbound-redis",
-		"examples/tinygo-redis",
-		"examples/tinygo-key-value",
-		"examples/variables-tinygo",
-	} {
-		build(t, example)
+	examples, err := os.ReadDir("examples")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, example := range examples {
+		example := example
+		t.Run(example.Name(), func(t *testing.T) {
+			t.Parallel()
+			buildApp(t, filepath.Join("examples", example.Name()))
+		})
 	}
 }
 

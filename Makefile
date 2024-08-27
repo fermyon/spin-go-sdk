@@ -17,28 +17,6 @@ http/testdata/http-tinygo/main.wasm: http/testdata/http-tinygo/main.go
 	tinygo build -target=wasi -gc=leaking -no-debug -o http/testdata/http-tinygo/main.wasm http/testdata/http-tinygo/main.go
 
 # ----------------------------------------------------------------------
-# Build examples
-# ----------------------------------------------------------------------
-EXAMPLES_DIR = examples
-
-.PHONY: build-examples
-build-examples: generate
-build-examples: $(EXAMPLES_DIR)/http-tinygo-outbound-http/outbound-http-to-same-app/main.wasm
-build-examples: $(EXAMPLES_DIR)/http-tinygo-outbound-http/tinygo-hello/main.wasm
-build-examples: $(EXAMPLES_DIR)/http-tinygo/main.wasm
-build-examples: $(EXAMPLES_DIR)/tinygo-outbound-redis/main.wasm
-build-examples: $(EXAMPLES_DIR)/tinygo-redis/main.wasm
-build-examples: $(EXAMPLES_DIR)/tinygo-key-value/main.wasm
-build-examples: $(EXAMPLES_DIR)/tinygo-sqlite/main.wasm
-build-examples: $(EXAMPLES_DIR)/tinygo-llm/main.wasm
-build-examples: $(EXAMPLES_DIR)/tinygo-outbound-mysql/main.wasm
-build-examples: $(EXAMPLES_DIR)/tinygo-outbound-pg/main.wasm
-build-examples: $(EXAMPLES_DIR)/variables-tinygo/main.wasm
-
-$(EXAMPLES_DIR)/%/main.wasm: $(EXAMPLES_DIR)/%/main.go
-	tinygo build -target=wasi -gc=leaking -no-debug -o $@ $<
-
-# ----------------------------------------------------------------------
 # Generate C bindings
 # ----------------------------------------------------------------------
 GENERATED_SPIN_VARIABLES = variables/spin-config.c variables/spin-config.h
@@ -117,14 +95,4 @@ clean:
 	rm -f $(GENERATED_LLM)
 	rm -f $(GENERATED_OUTBOUND_MYSQL)
 	rm -f $(GENERATED_SDK_VERSION)
-	rm -f http/testdata/http-tinygo/main.wasm
-	rm -f $(EXAMPLES_DIR)/http-tinygo/main.wasm
-	rm -f $(EXAMPLES_DIR)/http-tinygo-outbound-http/main.wasm
-	rm -f $(EXAMPLES_DIR)/tinygo-outbound-redis/main.wasm
-	rm -f $(EXAMPLES_DIR)/tinygo-redis/main.wasm
-	rm -f $(EXAMPLES_DIR)/tinygo-key-value/main.wasm
-	rm -f $(EXAMPLES_DIR)/tinygo-sqlite/main.wasm
-	rm -f $(EXAMPLES_DIR)/tinygo-llm/main.wasm
-	rm -f $(EXAMPLES_DIR)/tinygo-outbound-mysql/main.wasm
-	rm -f $(EXAMPLES_DIR)/tinygo-outbound-pg/main.wasm
 	rm -f $(SDK_VERSION_DEST_FILES)
