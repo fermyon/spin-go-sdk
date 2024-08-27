@@ -78,7 +78,7 @@ func startSpin(t *testing.T, dir string) *testSpin {
 func buildApp(t *testing.T, dir string) {
 	t.Helper()
 
-	t.Log("building application: ", dir)
+	t.Log("building application:", dir)
 
 	cmd := exec.Command(spinBinary, "build")
 	cmd.Dir = dir
@@ -151,7 +151,11 @@ func TestBuildExamples(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, example := range examples {
-		buildApp(t, filepath.Join("examples", example.Name()))
+		example := example
+		t.Run(example.Name(), func(t *testing.T) {
+			t.Parallel()
+			buildApp(t, filepath.Join("examples", example.Name()))
+		})
 	}
 }
 
