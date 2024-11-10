@@ -12,6 +12,10 @@ test: test-integration
 test-integration: http/testdata/http-tinygo/main.wasm
 	go test -v -count=1 .
 
+.PHONY: test-integration-wasip2
+test-integration-wasip2: 
+	cd v2 && go test -v -count=1 .
+
 http/testdata/http-tinygo/main.wasm: generate
 http/testdata/http-tinygo/main.wasm: http/testdata/http-tinygo/main.go
 	tinygo build -target=wasi -gc=leaking -no-debug -o http/testdata/http-tinygo/main.wasm http/testdata/http-tinygo/main.go
