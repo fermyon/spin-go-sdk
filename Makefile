@@ -4,9 +4,9 @@ VERSION = 2.3.0-pre0
 # Test
 # ----------------------------------------------------------------------
 .PHONY: test
-test: test
-	tinygo test -target=wasi -gc=leaking -v ./http
-	tinygo test -target=wasi -gc=leaking -v ./redis
+test:
+	tinygo test -target=wasip1 -gc=leaking -buildmode=c-shared -v ./http
+	tinygo test -target=wasip1 -gc=leaking -buildmode=c-shared -v ./redis
 
 .PHONY: test-integration
 test-integration:
