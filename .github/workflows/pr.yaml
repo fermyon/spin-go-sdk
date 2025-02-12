@@ -1,0 +1,32 @@
+name: Run Integration tests
+on:
+  push:
+    branches:
+      - wasip2-http
+
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: Setup TinyGo
+        uses: acifani/setup-tinygo@v2
+        with:
+          tinygo-version: '0.33.0'
+
+      - name: Setup Spin
+        uses: fermyon/actions/spin/setup@v1
+        with:
+          version: "v2.7.0"
+
+      - name: Run wasip2 integration tests
+        run: make test-integration-wasip2
+
